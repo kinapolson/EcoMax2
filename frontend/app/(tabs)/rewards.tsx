@@ -41,7 +41,7 @@ export default function RewardsScreen() {
     const fetchData = async () => {
       try {
         //grabs user's eco pts
-        const ptsRes = await fetch("http://backend/get_user_pts.php");
+        const ptsRes = await fetch("http://localhost:8000/get_user_pts.php");
         const ptsText = await ptsRes.text();
         const ptsData = JSON.parse(ptsText);
 
@@ -50,7 +50,7 @@ export default function RewardsScreen() {
         }
         
         //grabs fab items
-        const favRes = await fetch("http://backend/get_b_items.php?b_id=1");
+        const favRes = await fetch("http://localhost:8000/get_b_items.php?b_id=1");
         const favText = await favRes.text();
         const favData = JSON.parse(favText);
 
@@ -59,7 +59,7 @@ export default function RewardsScreen() {
         }
 
         //grabs previously claimed items
-        const prevRes = await fetch("http://backend/get_b_items.php?b_id=2");
+        const prevRes = await fetch("http://localhost:8000/get_b_items.php?b_id=2");
         const prevText = await prevRes.text();
         const prevData = JSON.parse(prevText);
 
@@ -68,7 +68,7 @@ export default function RewardsScreen() {
         }
 
         //grabs redeem rewards
-        const rewardsRes = await fetch("http://backend/get_rewards.php");
+        const rewardsRes = await fetch("http://localhost:8000/get_rewards.php");
         const rewardsText = await rewardsRes.text();
         const rewardsData = JSON.parse(rewardsText);
 
@@ -77,7 +77,7 @@ export default function RewardsScreen() {
         }
 
         //grabs leaderboard data
-        const leaderboardRes = await fetch("http://backend/get_leaderboard.php");
+        const leaderboardRes = await fetch("http://localhost:8000/get_leaderboard.php");
         const leaderboardText = await leaderboardRes.text();
         const leaderboardData = JSON.parse(leaderboardText);
 
@@ -100,7 +100,7 @@ export default function RewardsScreen() {
     }
 
     try {
-      const response = await fetch("http://backend/redeem_reward.php", {
+      const response = await fetch("http://localhost:8000/redeem_reward.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -192,7 +192,7 @@ export default function RewardsScreen() {
                   >
                     <View style={styles.logoBox}>
                       <Image
-                        source={{ uri: `http://backend/items/${item.image}` }}
+                        source={{ uri: `http://localhost:8000/items/${item.image}` }}
                         style={styles.logoImage}
                         resizeMode="contain"
                       />
@@ -219,7 +219,7 @@ export default function RewardsScreen() {
                   >
                     <View style={styles.logoBox}>
                       <Image
-                        source={{ uri: `http://backend/items/${item.image}` }}
+                        source={{ uri: `http://localhost:8000/items/${item.image}` }}
                         style={styles.logoImage}
                         resizeMode="contain"
                       />
@@ -305,7 +305,7 @@ export default function RewardsScreen() {
 
                     {/* profile */}
                     <Image
-                      source={{ uri: `http://backend/pfp/${user.pfp}` }}
+                      source={{ uri: `http://localhost:8000/pfp/${user.pfp}` }}
                       style={[
                         styles.rankAvatar,
                         index === 1 && { width: 70, height: 70, borderRadius: 35 }
@@ -345,7 +345,7 @@ export default function RewardsScreen() {
                   <View style={styles.listUserProfile}>
                     <Image
                       source={{
-                        uri: `http://backend/pfp/${user.pfp}`
+                        uri: `http://localhost:8000/pfp/${user.pfp}`
                       }}
                       style={styles.listAvatar}
                     />

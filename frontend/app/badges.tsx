@@ -3,6 +3,8 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+const API_URL = "http://localhost:8000/get_badges.php";
+
 type Badge = {
   badge_id: number
   badge_name: string
@@ -18,7 +20,7 @@ export default function Badges() {
   const [badges,setBadges] = useState<Badge[]>([]);
   
   useEffect(()=> {
-    fetch("http://backend/get_badges.php?user_id=1")
+    fetch(`${API_URL}/get_badges.php?user_id=1`)
       .then(res=>res.json())
       .then(data=> {
         console.log("BADGE DATA:", data);

@@ -17,7 +17,7 @@ export default function HomeScreen() {
   const progress = badges.length ? Math.round((earnedCount / badges.length) * 100) : 0;
 
   useEffect(()=>{
-    fetch("http://backend/get_badges.php?user_id=1")
+    fetch("http://localhost:8000/get_badges.php?user_id=1")
       .then(res => res.json())
       .then(data => {
         if(data.status === "success"){

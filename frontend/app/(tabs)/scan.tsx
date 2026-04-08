@@ -84,7 +84,7 @@ export default function ScanScreen() {
         } as any);
 
         //sending img to php
-        const response = await fetch("http://backend/scan_receipt.php", {
+        const response = await fetch("http://localhost:8000/scan_receipt.php", {
             method: "POST",
             body: formData,
         });

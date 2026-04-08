@@ -10,12 +10,12 @@ export default function BusinessDetails() {
   const [similarItems, setSimilarItems] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch(`http://backend/get_b_items.php?item_id=${id}`)
+    fetch(`http://localhost:8000/get_b_items.php?item_id=${id}`)
       .then(res => res.json())
       .then(data => {
         if (data.status === "success") {
           setItem(data.item);
-          fetch(`http://backend/get_b_items.php?b_id=${data.item.b_id}`)
+          fetch(`http://localhost:8000/get_b_items.php?b_id=${data.item.b_id}`)
             .then(res => res.json())
             .then(data2 => {
               if (data2.status === "success") {
@@ -55,7 +55,7 @@ export default function BusinessDetails() {
             </View>
 
             <Image
-              source={{ uri: `http://backend/items/${item.image}` }}
+              source={{ uri: `http://localhost:8000/items/${item.image}` }}
               style={styles.thumbImage}
               resizeMode="cover"
             />
@@ -88,7 +88,7 @@ export default function BusinessDetails() {
                 />
 
                 <Image
-                  source={{ uri: `http://backend/items/${business.image}` }}
+                  source={{ uri: `http://localhost:8000/items/${business.image}` }}
                   style={styles.itemImage}
                 />
 
