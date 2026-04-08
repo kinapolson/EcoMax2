@@ -1,0 +1,34 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - connector
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+    networks:
+      - connector
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ecomax_users
+    ports:
+      - "3308:3306"
+    networks:
+      - connector
+networks:
+  connector:
+    driver: bridge
