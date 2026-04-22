@@ -1,36 +1,50 @@
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const API_URL = "http://localhost:8000/get_badges.php";
+const API_URL = "http://192.168.1.157:8000";
 
 type Badge = {
-  badge_id: number
-  badge_name: string
-  badge_descrip: string
-  badge_icon: string
-  earned: number
-}
+  badge_id: number;
+  badge_name: string;
+  badge_descrip: string;
+  badge_icon: string;
+  earned: number;
+};
+
 export const unstable_settings = {
-  tabBarButton: () => null, 
+  tabBarButton: () => null,
 };
 
 export default function Badges() {
-  const [badges,setBadges] = useState<Badge[]>([]);
-  
-  useEffect(()=> {
-    fetch(`${API_URL}/get_badges.php?user_id=1`)
-      .then(res=>res.json())
-      .then(data=> {
+  const { userId } = useLocalSearchParams();
+
+  const userIdNum = Array.isArray(userId)
+    ? Number(userId[0])
+    : Number(userId);
+
+  const isValidUserId = !isNaN(userIdNum) && userIdNum > 0;
+
+  const [badges, setBadges] = useState<Badge[]>([]);
+
+  useEffect(() => {
+    if (!isValidUserId) {
+      console.log("Invalid userId:", userId);
+      return;
+    }
+
+    fetch(`${API_URL}/get_badges.php?user_id=${userIdNum}`)
+      .then(res => res.json())
+      .then(data => {
         console.log("BADGE DATA:", data);
 
-        if(data.status==="success") {
+        if (data.status === "success") {
           setBadges(data.badges);
         }
       })
       .catch(err => console.log("Badge fetch error:", err));
-  },[]);
+  }, [userIdNum]);
 
   return (
     <ScrollView style={styles.container}>
@@ -50,16 +64,16 @@ export default function Badges() {
           data={badges}
           keyExtractor={(item) => item.badge_id.toString()}
           scrollEnabled={false}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <View style={styles.badgeCard}>
               <Text style={styles.badgeName}>
                 {item.badge_name}
               </Text>
-              
+
               <Text style={styles.badgeTxt}>
                 {item.badge_descrip}
               </Text>
-              
+
               <Text style={styles.badgeTxt}>
                 {item.earned ? "Completed" : "Not Completed"}
               </Text>

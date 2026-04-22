@@ -13,7 +13,7 @@ import {
     View
 } from "react-native";
 
-const API_URL = "http://localhost:8000";
+const API_URL = "http://192.168.1.157:8000";
 
 export default function SignUpScreen() {
 

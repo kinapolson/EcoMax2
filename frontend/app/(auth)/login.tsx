@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Alert, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 //ip address where backend is running
-const API_URL = "http://localhost:8000/login.php";
+const BASE_URL = "http://192.168.1.157:8000";
 
 export default function LoginScreen() {
     const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ export default function LoginScreen() {
 
         try {
             //sends e+p to login.php to the server
-            const response = await fetch(`${API_URL}/login.php`, {
+            const response = await fetch(`${BASE_URL}/login.php`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

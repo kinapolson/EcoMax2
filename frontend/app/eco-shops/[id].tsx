@@ -6,11 +6,12 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View 
 export default function BusinessDetails() {
   const router = useRouter();
   const { id } = useLocalSearchParams();
+  const itemId = Number(id) || 0;
   const [items,setItems] = useState<any[]>([]);
   const [business,setBusiness] = useState<any>(null);
 
   useEffect(()=>{
-    fetch(`http://localhost:8000/business_details.php?id=${id}`)
+    fetch(`http://192.168.1.157:8000/business_details.php?id=${itemId}`)
       .then(res=>res.json())
       .then(data=>{
         if(data.status==="success"){
@@ -18,14 +19,14 @@ export default function BusinessDetails() {
         }
       });
 
-    fetch(`http://localhost:8000/get_b_items.php?b_id=${id}`)
+    fetch(`http://192.168.1.157:8000/get_b_items.php?b_id=${itemId}`)
       .then(res=>res.json())
       .then(data=>{
         if(data.status==="success"){
           setItems(data.items);
         }
       });
-    },[id]);
+    },[itemId]);
 
   if(!business) return null;
 
@@ -73,7 +74,7 @@ export default function BusinessDetails() {
                 />
 
                 <Image
-                  source={{uri:`http://localhost:8000/items/${item.image}`}}
+                  source={{uri:`http://192.168.1.157:8000/items/${item.image}`}}
                   style={styles.itemImage}
                 />
 

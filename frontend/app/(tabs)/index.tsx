@@ -12,13 +12,20 @@ type Badge = {
 }
 
 export default function HomeScreen() {
-  const { name, points } = useLocalSearchParams();
+  const { name, points, userId } = useLocalSearchParams();
+
+  const userIdNum = Array.isArray(userId)
+    ? Number(userId[0])
+    : Number(userId);
+
   const [badges, setBadges] = useState<Badge[]>([]);
   const [earnedCount,setEarnedCount] = useState(0);
   const progress = badges.length ? Math.round((earnedCount / badges.length) * 100) : 0;
 
   useEffect(()=>{
-    fetch("http://localhost:8000/get_badges.php?user_id=1")
+    if (!userIdNum) return;
+
+    fetch(`http://192.168.1.157:8000/get_badges.php?user_id=${userIdNum}`)
       .then(res => res.json())
       .then(data => {
         if(data.status === "success"){
@@ -28,7 +35,7 @@ export default function HomeScreen() {
         }
       })
       .catch(err => console.log("Badge fetch error:", err))
-    },[]
+    },[userIdNum]
   )
 
   return (
@@ -55,7 +62,10 @@ export default function HomeScreen() {
           <View style={styles.homeDivider} />
 
           <TouchableOpacity style={styles.homeItem}
-            onPress={() => router.push("/badges")}
+            onPress={() => router.push({
+              pathname: "/badges",
+              params: { userId: userIdNum }
+            })}
           >
             {/* button indicator */}
             <View style={styles.homeLabelRow}>
@@ -142,6 +152,7 @@ export default function HomeScreen() {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   //body

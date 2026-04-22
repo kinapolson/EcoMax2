@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { Image, Platform, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 //reward struct from rewards db
 type Reward = {
@@ -37,10 +37,7 @@ export default function RewardsScreen() {
   const { userId } = useLocalSearchParams();
   const [leaderboardUsers, setLeaderboardUsers] = useState<LeaderboardUser[]>([]);
 
-  const BASE_URL =
-    Platform.OS === "android"
-      ? "http://10.0.2.2:8000"
-      : "http://localhost:8000";
+  const BASE_URL = "http://192.168.1.157:8000";
 
   useEffect(() => {
     const fetchData = async () => {
