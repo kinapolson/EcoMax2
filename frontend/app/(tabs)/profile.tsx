@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Image, ScrollView, StyleSheet, Switch, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from '../../components/themed-text';
 import { ThemedView } from '../../components/themed-view';
 
@@ -64,6 +64,7 @@ const FRIENDS_DATA = [
 ];
 
 export default function ProfileScreen() {
+    const { name, points } = useLocalSearchParams();
     const [showFriends, setShowFriends] = useState(false);
     const [showAccountInfo, setShowAccountInfo] = useState(false);
     const router = useRouter();
@@ -644,254 +645,196 @@ export default function ProfileScreen() {
     }
 
     return (
-        <ScrollView style={styles.container}>
-            {/* Header */}
-            <ThemedView style={styles.header} lightColor="#264e36">
-                <View style={styles.headerContent}>
-                    <View style={{ width: 28 }} />
-                    <View style={{ flex: 1 }} />
-                    <TouchableOpacity onPress={() => setShowSettings(true)}>
-                        <Ionicons name="settings-outline" size={28} color="#f5f0e6" />
-                    </TouchableOpacity>
-                </View>
-            </ThemedView>
+    <ScrollView style={styles.container}>
+        {/* header */}
+        <View style={styles.header}>
+        <Image
+            source={require('../../assets/images/ecomax_icon_dark.png')}
+            style={styles.image}
+        />
 
-            {/* Eco points pill */}
-            <View style={styles.pointsPillWrapper}>
-                <ThemedView style={styles.pointsPill} lightColor="#5ca377">
-                    <ThemedText style={styles.pointsPillText}>350</ThemedText>
-                </ThemedView>
+        <TouchableOpacity onPress={() => setShowSettings(true)}>
+            <Ionicons name="settings-outline" size={26} color="#F5F0E6" />
+        </TouchableOpacity>
+        </View>
+
+        {/* profile card */}
+        <View style={styles.cardWrapper}>
+        <View style={styles.profileCard}>
+            <Image
+            source={require('../../assets/pfp/js_pfp.jpg')}
+            style={styles.avatar}
+            />
+
+            <Text style={styles.name}>{name || "James Smith"}</Text>
+
+            <View style={styles.statsRow}>
+            <View style={styles.statItem}>
+                <Text style={styles.statLabel}>Eco Points</Text>
+                <Text style={styles.statValue}>{points || "1,352"}</Text>
             </View>
 
-            {/* Profile card */}
-            <View style={styles.profileCardWrapper}>
-                <ThemedView style={styles.profileCard} lightColor="#5ca377">
-                    <View style={styles.avatarRow}>
-                        <View style={styles.avatarOuter}>
-                            <Image
-                                source={require('../../assets/pfp/js_pfp.jpg')}
-                                style={styles.avatar}
-                            />
-                        </View>
-                    </View>
+            <View style={styles.divider} />
 
-                    <ThemedText style={styles.name} type="title">
-                        James Smith
-                    </ThemedText>
-
-                    <View style={styles.statsRow}>
-                        <View style={styles.statItem}>
-                            <ThemedText style={styles.statLabel}>Lifetime</ThemedText>
-                            <ThemedText style={styles.statValue}>1,352</ThemedText>
-                        </View>
-
-                        <View style={styles.divider} />
-
-                        <View style={styles.statItem}>
-                            <ThemedText style={styles.statLabel}>Eco Challenge</ThemedText>
-                            <ThemedText style={styles.statValue}>6/7</ThemedText>
-                        </View>
-                    </View>
-
-                    <View style={styles.iconsRow}>
-                        <View style={styles.iconCircle}>
-                            <Ionicons name="receipt-outline" size={32} color="#f5f0e6" />
-                        </View>
-                        <View style={styles.iconCircle}>
-                            <Ionicons name="people-outline" size={32} color="#f5f0e6" />
-                        </View>
-                        <View style={styles.iconCircle}>
-                            <Ionicons name="medal-outline" size={32} color="#f5f0e6" />
-                        </View>
-                        <View style={styles.iconCircle}>
-                            <Ionicons name="card-outline" size={32} color="#f5f0e6" />
-                            <View style={{
-                                position: 'absolute',
-                                right: 8,
-                                bottom: 8,
-                                backgroundColor: '#f5f0e6',
-                                borderRadius: 8,
-                                paddingHorizontal: 6,
-                                paddingVertical: 2,
-                            }}>
-                                <ThemedText style={{ color: '#264e36', fontWeight: 'bold', fontSize: 12 }}>100</ThemedText>
-                            </View>
-                        </View>
-                    </View>
-                </ThemedView>
+            <View style={styles.statItem}>
+                <Text style={styles.statLabel}>Eco Badges &gt;</Text>
+                <Text style={styles.statValue}>6/7</Text>
             </View>
-
-            {/* Action buttons */}
-            <View style={styles.actionsWrapper}>
-                <TouchableOpacity style={styles.actionBtn} onPress={() => setShowAccountInfo(true)}>
-                    <ThemedText style={styles.actionText}>Account Information</ThemedText>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.actionBtn} onPress={() => setShowHistory(true)}>
-                    <ThemedText style={styles.actionText}>History</ThemedText>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.actionBtn} onPress={() => setShowFriends(true)}>
-                    <ThemedText style={styles.actionText}>Friends</ThemedText>
-                </TouchableOpacity>
             </View>
-        </ScrollView>
+        </View>
+        </View>
+
+        {/* options */}
+        <View style={styles.optionsContainer}>
+        {/* acct info */}
+        <TouchableOpacity
+            style={styles.optionCard}
+            onPress={() => setShowAccountInfo(true)}
+        >
+            <View style={styles.optionLeft}>
+            <Ionicons name="lock-closed-outline" size={20} color="#F5F0E6" />
+            <Text style={styles.optionText}>Account Information</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color="#F5F0E6" />
+        </TouchableOpacity>
+
+        {/* history */}
+        <TouchableOpacity
+            style={styles.optionCard}
+            onPress={() => setShowHistory(true)}
+        >
+            <View style={styles.optionLeft}>
+            <Ionicons name="receipt-outline" size={20} color="#F5F0E6" />
+            <Text style={styles.optionText}>History</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color="#F5F0E6" />
+        </TouchableOpacity>
+
+        {/* friends */}
+        <TouchableOpacity
+            style={styles.optionCard}
+            onPress={() => setShowFriends(true)}
+        >
+            <View style={styles.optionLeft}>
+            <Ionicons name="people-outline" size={20} color="#F5F0E6" />
+            <Text style={styles.optionText}>Friends</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color="#F5F0E6" />
+        </TouchableOpacity>
+        </View>
+    </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#f5f0e6',
+        flex: 1,
+        backgroundColor: "#F5F0E6",
     },
 
+    /* header */
     header: {
-        backgroundColor: '#264e36',
-        paddingTop: 64,
-        paddingBottom: 120,
-        paddingLeft: 20,
+        backgroundColor: "#264e36",
+        paddingTop: 80,
+        paddingBottom: 100,
+        paddingHorizontal: 20,
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
 
-    pointsPillWrapper: {
-        alignItems: 'center',
-        marginTop: -36,
+    image: {
+        height: 49,
+        width: 37,
     },
 
-    pointsPill: {
-        paddingVertical: 10,
-        paddingHorizontal: 28,
-        backgroundColor: '#5ca377',
-        borderRadius: 14,
-        width: '48%',
-        alignItems: 'center',
+    /* overlap wrapper */
+    cardWrapper: {
+        alignItems: "center",
+        marginTop: -70, 
     },
 
-    pointsPillText: {
-        color: '#f5f0e6',
-        fontSize: 22,
-        fontFamily: 'Quicksand_700Bold',
-    },
-
-    profileCardWrapper: {
-        alignItems: 'center',
-        marginTop: 50,
-    },
-
+    /* profile card */
     profileCard: {
-        width: '86%',
-        backgroundColor: '#5ca377',
-        borderRadius: 14,
-        paddingVertical: 18,
-        paddingHorizontal: 16,
-        alignItems: 'center',
+        backgroundColor: "#5ca377",
+        width: "85%",
+        borderRadius: 20,
+        paddingTop: 60, 
+        paddingBottom: 20,
+        alignItems: "center",
     },
 
-    avatarRow: {
-        marginTop: -48,
-        marginBottom: 8,
-    },
-
-    avatarOuter: {
-        width: 92,
-        height: 92,
-        borderRadius: 46,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow: 'hidden',
-    },
-
+    /* user pfp pic */
     avatar: {
-        width: '100%',
-        height: '100%',
+        width: 90,
+        height: 90,
+        borderRadius: 45,
+        position: "absolute",
+        top: -45, 
     },
 
     name: {
-        color: '#f5f0e6',
-        marginTop: 6,
-        marginBottom: 12,
-        fontWeight: '700',
+        fontSize: 24,
+        fontFamily: "Quicksand_700Bold",
+        color: "#F5F0E6",
+        marginBottom: 10,
     },
 
     statsRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%',
-        justifyContent: 'center',
-        marginBottom: 12,
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 10,
     },
 
     statItem: {
-        alignItems: 'center',
-        flex: 1,
+        alignItems: "center",
+        paddingHorizontal: 25,
     },
 
     statLabel: {
-        color: '#f5f0e6',
-        fontSize: 12,
-        marginBottom: 6,
+        fontSize: 13,
+        color: "#F5F0E6",
+        fontFamily: "Quicksand_400Regular",
     },
 
     statValue: {
-        color: '#f5f0e6',
-        fontSize: 24,
-        fontFamily: 'Quicksand_700Bold',
-        marginTop: 4,
-        maxWidth: '100%',
-        textAlign: 'center',
+        fontSize: 26,
+        fontFamily: "Quicksand_700Bold",
+        color: "#F5F0E6",
     },
 
     divider: {
-        width: 1.4,
-        backgroundColor: '#f5f0e6',
+        width: 1.5,
         height: 40,
-        marginHorizontal: 4,
+        backgroundColor: "#F5F0E6",
     },
 
-    iconsRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        backgroundColor: '#264e36',
-        paddingVertical: 10,
-        paddingHorizontal: 8,
-        width: '100%',
-        borderRadius: 10,
+    /* optoins */
+    optionsContainer: {
+        marginTop: 30,
+        alignItems: "center",
     },
 
-    iconCircle: {
-        width: 48,
-        height: 48,
-        borderRadius: 24,
-        backgroundColor: '#264e36',
-        borderWidth: 2,
-        borderColor: 'rgba(255,255,255,0.06)',
-        justifyContent: 'center',
-        alignItems: 'center',
+    optionCard: {
+        backgroundColor: "#A47148",
+        width: "85%",
+        borderRadius: 16,
+        padding: 18,
+        marginBottom: 16,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
 
-    iconText: {
-        color: '#F5F0E6',
+    optionLeft: {
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 10,
+    },
+
+    optionText: {
+        color: "#F5F0E6",
         fontSize: 16,
-        fontWeight: '600',
-    },
-
-    actionsWrapper: {
-        paddingHorizontal: 24,
-        marginTop: 50,
-        marginBottom: 40,
-    },
-
-    actionBtn: {
-        backgroundColor: '#a47148',
-        paddingVertical: 16,
-        paddingHorizontal: 16,
-        borderRadius: 12,
-        marginBottom: 12,
-    },
-
-    actionText: {
-        color: '#f5f0e6',
-        fontSize: 22,
-        fontFamily: 'Quicksand_700Bold',
+        fontFamily: "Quicksand_700Bold",
     },
 
     // Friends view styles
