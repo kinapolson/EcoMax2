@@ -35,37 +35,8 @@ const RECEIPTS_DATA = [
     },
 ];
 
-const FRIENDS_DATA = [
-    {
-        id: '1',
-        name: 'Robert Williams',
-        avatar: 'https://randomuser.me/api/portraits/men/75.jpg',
-    },
-    {
-        id: '2',
-        name: 'Crystal Park',
-        avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
-    },
-    {
-        id: '3',
-        name: 'Sam Stevenson',
-        avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
-    },
-    {
-        id: '4',
-        name: 'Jennifer Patterson',
-        avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
-    },
-    {
-        id: '5',
-        name: 'Chris Robinson',
-        avatar: 'https://randomuser.me/api/portraits/men/46.jpg',
-    },
-];
-
 export default function ProfileScreen() {
     const { name, points } = useLocalSearchParams();
-    const [showFriends, setShowFriends] = useState(false);
     const [showAccountInfo, setShowAccountInfo] = useState(false);
     const router = useRouter();
     const [showHistory, setShowHistory] = useState(false);
@@ -344,55 +315,6 @@ export default function ProfileScreen() {
 
                                 {/* Right notch */}
                                 <View style={styles.receiptNotchRight} />
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
-                </View>
-            </View>
-        );
-    }
-
-    if (showFriends) {
-        return (
-            <View style={styles.friendsContainer}>
-                {/* Header */}
-                <ThemedView style={styles.friendsHeader} lightColor="#264e36" />
-
-
-                {/* Content area */}
-                <View style={styles.friendsContent}>
-                    {/* Title row with back button and add button */}
-                    <View style={styles.titleRow}>
-                        <TouchableOpacity
-                            style={styles.backButton}
-                            onPress={() => setShowFriends(false)}
-                        >
-                            <Ionicons name="chevron-back-outline" size={28} color="#264e36" />
-                        </TouchableOpacity>
-
-                        <ThemedText style={styles.friendsTitle}>Friends</ThemedText>
-
-                        <TouchableOpacity style={styles.addButton}>
-                            <View style={styles.addButtonCircle}>
-                                <Ionicons name="add" size={20} color="#264e36" />
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
-                    {/* Friends list */}
-                    <ScrollView
-                        style={styles.listContainer}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        {FRIENDS_DATA.map((friend) => (
-                            <TouchableOpacity key={friend.id} style={styles.friendCard}>
-                                <View style={styles.friendAvatarContainer}>
-                                    <Image
-                                        source={{ uri: friend.avatar }}
-                                        style={styles.friendAvatar}
-                                    />
-                                </View>
-                                <ThemedText style={styles.friendName}>{friend.name}</ThemedText>
                             </TouchableOpacity>
                         ))}
                     </ScrollView>
@@ -709,18 +631,6 @@ export default function ProfileScreen() {
             </View>
             <Ionicons name="chevron-forward" size={20} color="#F5F0E6" />
         </TouchableOpacity>
-
-        {/* friends */}
-        <TouchableOpacity
-            style={styles.optionCard}
-            onPress={() => setShowFriends(true)}
-        >
-            <View style={styles.optionLeft}>
-            <Ionicons name="people-outline" size={20} color="#F5F0E6" />
-            <Text style={styles.optionText}>Friends</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color="#F5F0E6" />
-        </TouchableOpacity>
         </View>
     </ScrollView>
     );
@@ -835,102 +745,6 @@ const styles = StyleSheet.create({
         color: "#F5F0E6",
         fontSize: 16,
         fontFamily: "Quicksand_700Bold",
-    },
-
-    // Friends view styles
-    friendsContainer: {
-        flex: 1,
-        backgroundColor: '#f5f0e6',
-    },
-
-    friendsHeader: {
-        backgroundColor: '#264e36',
-        paddingTop: 50,
-        paddingBottom: 20,
-        paddingLeft: 16,
-    },
-
-    headerIcon: {
-        width: 40,
-        height: 40,
-    },
-
-    friendsContent: {
-        flex: 1,
-        backgroundColor: '#f5f0e6',
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
-        marginTop: -20,
-        paddingTop: 20,
-    },
-
-    titleRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 16,
-        marginBottom: 16,
-    },
-
-    backButton: {
-        padding: 4,
-    },
-
-    friendsTitle: {
-        fontSize: 24,
-        fontWeight: '700',
-        color: '#264e36',
-        flex: 1,
-        textAlign: 'center',
-    },
-
-    addButton: {
-        padding: 4,
-    },
-
-    addButtonCircle: {
-        width: 28,
-        height: 28,
-        borderRadius: 14,
-        borderWidth: 2,
-        borderColor: '#264e36',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
-    listContainer: {
-        flex: 1,
-        paddingHorizontal: 24,
-    },
-
-    friendCard: {
-        backgroundColor: '#5ca377',
-        borderRadius: 14,
-        paddingVertical: 12,
-        paddingHorizontal: 16,
-        marginBottom: 12,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-
-    friendAvatarContainer: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: '#fff',
-        overflow: 'hidden',
-        marginRight: 16,
-    },
-
-    friendAvatar: {
-        width: '100%',
-        height: '100%',
-    },
-
-    friendName: {
-        color: '#f5f0e6',
-        fontSize: 20,
-        fontFamily: 'Quicksand_700Bold',
     },
 
     // Account Information view styles
