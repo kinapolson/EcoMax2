@@ -24,7 +24,7 @@ export default function ShopScreen() {
   });
 
   useEffect(() => {
-    fetch("http://192.168.1.157:8000/get_businesses.php")
+    fetch("http://localhost:8000/get_businesses.php")
       .then(res => res.json())
       .then(data => {
         if (data.status === "success") {
@@ -99,7 +99,7 @@ export default function ShopScreen() {
                   >
                     <View style={styles.logoBox}>
                       <Image
-                        source={{ uri: `http://192.168.1.157:8000/logos/${item.logo}` }}
+                        source={{ uri: `http://localhost:8000/logos/${item.logo}` }}
                         style={styles.logoImage}
                         resizeMode="contain"
                       />

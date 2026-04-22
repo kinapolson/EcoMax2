@@ -3,7 +3,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const API_URL = "http://192.168.1.157:8000";
+const API_URL = "http://localhost:8000";
 
 type Badge = {
   badge_id: number;

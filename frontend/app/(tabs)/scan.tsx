@@ -67,7 +67,7 @@ export default function ScanScreen() {
             type: `image/${fileType}`,
         });
 
-        const response = await fetch("http://192.168.1.157:8000/scan_receipt.php", {
+        const response = await fetch("http://localhost:8000/scan_receipt.php", {
             method: "POST",
             body: formData,
         });
@@ -100,7 +100,7 @@ Points: ${data.points}`,
                         text: "Yes",
                         onPress: async () => {
                             try {
-                                const confirmRes = await fetch("http://192.168.1.157:8000/confirm_receipt.php", {
+                                const confirmRes = await fetch("http://localhost:8000/confirm_receipt.php", {
                                     method: "POST",
                                     headers: {
                                         "Content-Type": "application/json",

@@ -25,7 +25,7 @@ export default function HomeScreen() {
   useEffect(()=>{
     if (!userIdNum) return;
 
-    fetch(`http://192.168.1.157:8000/get_badges.php?user_id=${userIdNum}`)
+    fetch(`http://localhost:8000/get_badges.php?user_id=${userIdNum}`)
       .then(res => res.json())
       .then(data => {
         if(data.status === "success"){

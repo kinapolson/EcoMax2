@@ -11,7 +11,7 @@ export default function BusinessDetails() {
   const [business,setBusiness] = useState<any>(null);
 
   useEffect(()=>{
-    fetch(`http://192.168.1.157:8000/business_details.php?id=${itemId}`)
+    fetch(`http://localhost:8000/business_details.php?id=${itemId}`)
       .then(res=>res.json())
       .then(data=>{
         if(data.status==="success"){
@@ -19,7 +19,7 @@ export default function BusinessDetails() {
         }
       });
 
-    fetch(`http://192.168.1.157:8000/get_b_items.php?b_id=${itemId}`)
+    fetch(`http://localhost:8000/get_b_items.php?b_id=${itemId}`)
       .then(res=>res.json())
       .then(data=>{
         if(data.status==="success"){
@@ -74,7 +74,7 @@ export default function BusinessDetails() {
                 />
 
                 <Image
-                  source={{uri:`http://192.168.1.157:8000/items/${item.image}`}}
+                  source={{uri:`http://localhost:8000/items/${item.image}`}}
                   style={styles.itemImage}
                 />
 
