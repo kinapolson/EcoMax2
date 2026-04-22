@@ -7,22 +7,17 @@ import { ActivityIndicator, Alert, Image, StyleSheet, Text, TouchableOpacity, Vi
 
 export default function ScanScreen() {
     const cameraRef = useRef<CameraView>(null);
-    //cam permission
     const [permission, requestPermission] = useCameraPermissions();
-    //cam capture loading screen
     const [loading, setLoading] = useState(false);
     
-    //showing blank screen if permission is still loading
     if (!permission) {
         return <View style={{ flex: 1, backgroundColor: "#161618" }} />;
     }
 
-    //if user did not give cam permission
     if (!permission.granted) {
         return (
         <View style={styles.center}>
             <Text style={styles.txt}>Camera access is required</Text>
-            {/* btn to request permission */}
             <TouchableOpacity onPress={requestPermission} style={styles.button}>
                 <Text style={styles.buttonTxt}>Grant Permission</Text>
             </TouchableOpacity>
@@ -30,30 +25,20 @@ export default function ScanScreen() {
         );
     }
 
-    //func that runs when scan btn is pressed
     const takePicture = async () => {
-    //stop if cam is nor loading or scanning
     if (!cameraRef.current || loading) return;
-    //turning on loading screen
     setLoading(true);
 
     try {
-        //take pic
         const photo = await cameraRef.current.takePictureAsync({
             quality: 1,
             base64: false,
             skipProcessing: false,
         });
 
-    //ocr img improvement
-
-        //resizing img so txt is clearer
         const processed = await ImageManipulator.manipulateAsync(
         photo.uri,
-        [
-            //make resolution high for better txt detection
-            { resize: { width: 2000 } },
-        ],
+        [{ resize: { width: 2000 } }],
         {
             compress: 1,
             format: ImageManipulator.SaveFormat.JPEG,
@@ -61,7 +46,6 @@ export default function ScanScreen() {
         }
         );
 
-        /* converting to grayscale for better OCR */
         const enhanced = await ImageManipulator.manipulateAsync(
             processed.uri,
         [],
@@ -71,61 +55,95 @@ export default function ScanScreen() {
         }
         );
         
-        //creating form to send data to php
         const formData = new FormData();
-        //send user_id
         formData.append("user_id", "1");
 
-        //attaching receipt img
+        const uriParts = enhanced.uri.split(".");
+        const fileType = uriParts[uriParts.length - 1];
+
         formData.append("receipt", {
             uri: enhanced.uri,
-            name: "receipt.jpg",
-            type: "image/jpeg",
-        } as any);
+            name: `receipt.${fileType}`,
+            type: `image/${fileType}`,
+        });
 
-        //sending img to php
         const response = await fetch("http://192.168.1.157:8000/scan_receipt.php", {
             method: "POST",
             body: formData,
         });
 
-        //grabbing raw txt response from server
         const text = await response.text();
         console.log("SERVER RESPONSE:", text);
 
         let data;
 
         try {
-            data = JSON.parse(text); //converting response txt to JSON
+            data = JSON.parse(text);
         } catch (err) {
             Alert.alert("Server Error", text);
             setLoading(false);
             return;
         }
 
-        //receipt successfully scanned
-        if (data.status === "success") {
+        if (data.status === "pending") {
             Alert.alert(
-                "Receipt Scanned",
+                "Confirm Receipt",
                 `Business: ${data.business}
-                Total: $${data.total}
-                Points: ${data.points}`
+Total: $${data.total}
+Points: ${data.points}`,
+                [
+                    {
+                        text: "No",
+                        onPress: () => setLoading(false)
+                    },
+                    {
+                        text: "Yes",
+                        onPress: async () => {
+                            try {
+                                const confirmRes = await fetch("http://192.168.1.157:8000/confirm_receipt.php", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                        user_id: 1,
+                                        fileName: data.fileName,
+                                        business: data.business,
+                                        total: data.total,
+                                        points: data.points,
+                                        items: data.items,
+                                    }),
+                                });
+
+                                const confirmData = await confirmRes.json();
+
+                                if (confirmData.status === "success") {
+                                    Alert.alert("Saved", "Receipt stored and points added");
+                                } else {
+                                    Alert.alert("Error", "Failed to save receipt");
+                                }
+                            } catch (err: any) {
+                                Alert.alert("Error", err.message);
+                            }
+
+                            setLoading(false);
+                        }
+                    }
+                ]
             );
         } else {
-            //scan failed
             Alert.alert("Scan Failed", data.message);
+            setLoading(false);
         }
 
     } catch (err: any) {
         Alert.alert("Error", err.message);
+        setLoading(false);
     }
-
-    setLoading(false);
     };
 
     return (
         <View style={styles.container}>
-            {/* header with logo */}
             <View style={styles.header}>
                 <Image
                 source={require("../../assets/images/ecomax_icon_dark.png")}
@@ -133,17 +151,13 @@ export default function ScanScreen() {
                 />
             </View>
 
-            {/* cam preview */}
             <CameraView ref={cameraRef} style={styles.camera} />
 
-            {/* nav btns */}
             <View style={styles.topbar}>
-                {/* close btn */}
                 <TouchableOpacity style={styles.optBtn} onPress={() => router.back()}>
                 <Ionicons name="close" size={22} color="#F5F0E6" />
                 </TouchableOpacity>
 
-                {/* help btn */}
                 <TouchableOpacity
                 style={styles.optBtn}
                 onPress={() => router.push("/tutorial/tp1")}
@@ -152,14 +166,12 @@ export default function ScanScreen() {
                 </TouchableOpacity>
             </View>
 
-            {/* scan btn */}
             <View style={styles.scanBtn}>
                 <TouchableOpacity style={styles.captureBtn} onPress={takePicture}>
                 <Ionicons name="camera" size={28} color="#F5F0E6" />
                 </TouchableOpacity>
             </View>
 
-            {/* scanning button overlay */}
             {loading && (
                 <View style={styles.loadingOverlay}>
                 <ActivityIndicator size="large" color="#F5F0E6" />
