@@ -7,12 +7,12 @@ export default function TutorialScreen() {
   return (
     <View style={styles.container}>
       {/* header */}
-      <View style={styles.header}> 
-        {/* logo */} 
-        <Image source={require('../../assets/images/ecomax_icon_dark.png')} 
+      <View style={styles.header}>
+        {/* logo */}
+        <Image source={require('../../assets/images/ecomax_icon_dark.png')}
           style={styles.image}
-        /> 
-        
+        />
+
         {/* title */}
         <Text style={styles.headerTitle}>Tutorial</Text>
       </View>
@@ -25,8 +25,8 @@ export default function TutorialScreen() {
           <Text style={styles.title}>Step 3: Confirmation</Text>
           <Text style={styles.txt}>
             {'\n'}{'\n'}Review the scanned data and tap Done.{'\n'}{'\n'}{'\n'}
-            You’ll see a celebratory 
-            animation—confetti, petals, or 
+            You’ll see a celebratory
+            animation—confetti, petals, or
             leaves—and a message like:{'\n'}
             “Success!”.{'\n'}{'\n'}{'\n'}
             You will also see the “Scan Another” option:{'\n'}{'\n'}{'\n'}
@@ -42,20 +42,13 @@ export default function TutorialScreen() {
             <Ionicons name="chevron-back-outline" size={22} color="#264e36" />
           </TouchableOpacity>
 
-          {/* forward btn */}
-          <TouchableOpacity
-            style={[styles.navBtn, styles.navBtnNxt]} 
-            onPress={() => router.push("/tutorial/tp1")}
-          >
-            <Ionicons name="chevron-forward-outline" size={22} color="#F5F0E6" />
-          </TouchableOpacity>
-        </View> 
+        </View>
       </View>
     </View>
   );
 }
 
-const styles=StyleSheet.create({
+const styles = StyleSheet.create({
   //body
   container: {
     flex: 1,
@@ -63,7 +56,7 @@ const styles=StyleSheet.create({
   },
 
   //content
-  content :{
+  content: {
     padding: 16,
   },
 

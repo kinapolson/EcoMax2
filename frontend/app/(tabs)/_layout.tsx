@@ -30,9 +30,9 @@ export default function TabLayout() {
         tabBarInactiveTintColor: "#F5F0e6",
 
         tabBarLabelStyle: {
-            fontSize: 12,
-            marginBottom: 6,
-            fontFamily: 'Quicksand_700Bold',
+          fontSize: 12,
+          marginBottom: 6,
+          fontFamily: 'Quicksand_700Bold',
         },
       }}
     >
@@ -76,6 +76,7 @@ export default function TabLayout() {
         name="scan"
         options={{
           title: "Scan",
+          tabBarStyle: { display: "none" },
           tabBarIcon: ({ color, size }) => {
             return (
               <Ionicons

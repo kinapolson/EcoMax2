@@ -305,16 +305,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#a47148",
     borderRadius: 29,
     justifyContent: "center",
+    paddingHorizontal: 18,
     marginBottom: 15,
   },
 
   input: {
     fontFamily: 'Poppins_700Bold',
-    borderRadius: 7,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
     fontSize: 15,
     color: "white",
-    marginLeft: 5,
   },
 });

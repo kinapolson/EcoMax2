@@ -7,12 +7,12 @@ export default function TutorialScreen() {
   return (
     <View style={styles.container}>
       {/* header */}
-      <View style={styles.header}> 
-        {/* logo */} 
-        <Image source={require('../../assets/images/ecomax_icon_dark.png')} 
+      <View style={styles.header}>
+        {/* logo */}
+        <Image source={require('../../assets/images/ecomax_icon_dark.png')}
           style={styles.image}
-        /> 
-        
+        />
+
         {/* title */}
         <Text style={styles.headerTitle}>Tutorial</Text>
       </View>
@@ -25,10 +25,10 @@ export default function TutorialScreen() {
           <Text style={styles.title}>Step 2: Recognition and Eco Point Calculation</Text>
           <Text style={styles.txt}>
             {'\n'}{'\n'}This app will detect:{'\n'}{'\n'}{'\n'}
-            {'\t'}a. Store Name{'\n'}
+            {'\t'}a. Store name{'\n'}
             {'\t'}b. Purchase date{'\n'}
             {'\t'}c. Item list{'\n'}
-            {'\t'}d. Total amout{'\n'}{'\n'}{'\n'}
+            {'\t'}d. Total amount{'\n'}{'\n'}{'\n'}
             Eco Points are awarded based on recognized items and shop participation.
           </Text>
         </View>
@@ -40,21 +40,21 @@ export default function TutorialScreen() {
           >
             <Ionicons name="chevron-back-outline" size={22} color="#264e36" />
           </TouchableOpacity>
-          
+
           {/* forward btn */}
           <TouchableOpacity
-            style={[styles.navBtn, styles.navBtnNxt]} 
+            style={[styles.navBtn, styles.navBtnNxt]}
             onPress={() => router.push("/tutorial/tp3")}
           >
             <Ionicons name="chevron-forward-outline" size={22} color="#F5F0E6" />
           </TouchableOpacity>
-        </View> 
+        </View>
       </View>
     </View>
   );
 }
 
-const styles=StyleSheet.create({
+const styles = StyleSheet.create({
   //body
   container: {
     flex: 1,
@@ -62,7 +62,7 @@ const styles=StyleSheet.create({
   },
 
   //content
-  content :{
+  content: {
     padding: 16,
   },
 
