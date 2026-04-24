@@ -21,7 +21,7 @@ export default function HomeScreen() {
     : Number(userId);
 
   const [badges, setBadges] = useState<Badge[]>([]);
-  const [earnedCount,setEarnedCount] = useState(0);
+  const [earnedCount, setEarnedCount] = useState(0);
   const progress = badges.length ? Math.round((earnedCount / badges.length) * 100) : 0;
 
   useEffect(() => {
@@ -36,20 +36,20 @@ export default function HomeScreen() {
     }
   }, [userId]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (!userIdNum) return;
 
     fetch(`http://localhost:8000/get_badges.php?user_id=${userIdNum}`)
       .then(res => res.json())
       .then(data => {
-        if(data.status === "success"){
+        if (data.status === "success") {
           setBadges(data.badges)
           const earned = data.badges.filter((b: Badge) => b.earned === 1).length;
           setEarnedCount(earned)
         }
       })
       .catch(err => console.log("Badge fetch error:", err))
-    },[userIdNum]
+  }, [userIdNum]
   )
 
   return (
@@ -107,8 +107,8 @@ export default function HomeScreen() {
         <View style={styles.progressBar}>
           <View
             style={[
-              styles.progressFill, 
-              {width: progress + "%"},
+              styles.progressFill,
+              { width: progress + "%" },
             ]}
           />
 
@@ -117,51 +117,51 @@ export default function HomeScreen() {
           </ThemedText>
         </View>
       </View>
-      
+
       {/* impact tracker */}
       <View style={styles.card}>
         <ThemedText style={styles.cardTitle}>
-          Impact Tracker
+          Community Impact Tracker
         </ThemedText>
-        
+
         <View style={styles.cardTitleDivider} />
 
         <View style={styles.chart}>
-            <View style={styles.barGroup}>
-              <View style={[styles.bar, { height: 30 }]} />
-              <ThemedText style={styles.day}>Sun</ThemedText>
-            </View>
-
-            <View style={styles.barGroup}>
-              <View style={[styles.bar, { height: 70 }]} />
-              <ThemedText style={styles.day}>Mon</ThemedText>
-            </View>
-
-            <View style={styles.barGroup}>
-              <View style={[styles.bar, { height: 55 }]} />
-              <ThemedText style={styles.day}>Tue</ThemedText>
-            </View>
-
-            <View style={styles.barGroup}>
-              <View style={[styles.bar, { height: 100 }]} />
-              <ThemedText style={styles.day}>Wed</ThemedText>
-            </View>
-
-            <View style={styles.barGroup}>
-              <View style={[styles.bar, { height: 40 }]} />
-              <ThemedText style={styles.day}>Thu</ThemedText>
-            </View>
-
-            <View style={styles.barGroup}>
-              <View style={[styles.bar, { height: 75 }]} />
-              <ThemedText style={styles.day}>Fri</ThemedText>
-            </View>
-
-            <View style={styles.barGroup}>
-              <View style={[styles.bar, { height: 65 }]} />
-              <ThemedText style={styles.day}>Sat</ThemedText>
-            </View>
+          <View style={styles.barGroup}>
+            <View style={[styles.bar, { height: 30 }]} />
+            <ThemedText style={styles.day}>Sun</ThemedText>
           </View>
+
+          <View style={styles.barGroup}>
+            <View style={[styles.bar, { height: 70 }]} />
+            <ThemedText style={styles.day}>Mon</ThemedText>
+          </View>
+
+          <View style={styles.barGroup}>
+            <View style={[styles.bar, { height: 55 }]} />
+            <ThemedText style={styles.day}>Tue</ThemedText>
+          </View>
+
+          <View style={styles.barGroup}>
+            <View style={[styles.bar, { height: 100 }]} />
+            <ThemedText style={styles.day}>Wed</ThemedText>
+          </View>
+
+          <View style={styles.barGroup}>
+            <View style={[styles.bar, { height: 40 }]} />
+            <ThemedText style={styles.day}>Thu</ThemedText>
+          </View>
+
+          <View style={styles.barGroup}>
+            <View style={[styles.bar, { height: 75 }]} />
+            <ThemedText style={styles.day}>Fri</ThemedText>
+          </View>
+
+          <View style={styles.barGroup}>
+            <View style={[styles.bar, { height: 65 }]} />
+            <ThemedText style={styles.day}>Sat</ThemedText>
+          </View>
+        </View>
       </View>
     </ScrollView>
   );

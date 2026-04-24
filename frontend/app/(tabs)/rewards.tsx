@@ -136,14 +136,14 @@ export default function RewardsScreen() {
   // Helper to get local avatar asset for leaderboard users by name
   const getAvatarSource = (name: string) => {
     const avatarMap: { [key: string]: ReturnType<typeof require> } = {
-      'James Smith': require('../../assets/pfp/js_pfp.jpg'),
-      'Robert Williams': require('../../assets/pfp/rw_pfp.jpg'),
-      'Crystal Park': require('../../assets/pfp/cp_pfp.webp'),
-      'Sam Stevenson': require('../../assets/pfp/ss_pfp.webp'),
-      'Jennifer Patterson': require('../../assets/pfp/jp_pfp.jpg'),
-      'Chris Robinson': require('../../assets/pfp/cr_pfp.jpg'),
+      'James Smith': require('../../assets/pfp/green_profile_image.jpg'),
+      'Robert Williams': require('../../assets/pfp/orange_profile_image.png'),
+      'Crystal Park': require('../../assets/pfp/blue_profile_image.png'),
+      'Sam Stevenson': require('../../assets/pfp/orange_profile_image.png'),
+      'Jennifer Patterson': require('../../assets/pfp/blue_profile_image.png'),
+      'Chris Robinson': require('../../assets/pfp/green_profile_image.jpg'),
     };
-    return avatarMap[name] ?? require('../../assets/pfp/js_pfp.jpg');
+    return avatarMap[name] ?? require('../../assets/pfp/green_profile_image.jpg');
   };
 
   return (

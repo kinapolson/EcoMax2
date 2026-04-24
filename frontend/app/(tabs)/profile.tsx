@@ -2,9 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert, Image, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useUser } from '../../context/UserContext';
 import { ThemedText } from '../../components/themed-text';
 import { ThemedView } from '../../components/themed-view';
+import { useUser } from '../../context/UserContext';
 
 const RECEIPTS_DATA = [
     {
@@ -69,7 +69,7 @@ export default function ProfileScreen() {
                     setBadgeEarned(data.badges.filter((b: { earned: number }) => b.earned === 1).length);
                 }
             })
-            .catch(() => {});
+            .catch(() => { });
     }, [user.userId]);
 
     useEffect(() => {
@@ -151,7 +151,7 @@ export default function ProfileScreen() {
                     <View style={styles.accountAvatarWrapper}>
                         <View style={styles.accountAvatarOuter}>
                             <Image
-                                source={require('../../assets/pfp/js_pfp.jpg')}
+                                source={require('../../assets/pfp/green_profile_image.jpg')}
                                 style={styles.accountAvatarImage}
                             />
                         </View>
@@ -639,78 +639,78 @@ export default function ProfileScreen() {
     }
 
     return (
-    <ScrollView style={styles.container}>
-        {/* header */}
-        <View style={styles.header}>
-        <Image
-            source={require('../../assets/images/ecomax_icon_dark.png')}
-            style={styles.image}
-        />
+        <ScrollView style={styles.container}>
+            {/* header */}
+            <View style={styles.header}>
+                <Image
+                    source={require('../../assets/images/ecomax_icon_dark.png')}
+                    style={styles.image}
+                />
 
-        <TouchableOpacity onPress={() => setShowSettings(true)}>
-            <Ionicons name="settings-outline" size={26} color="#F5F0E6" />
-        </TouchableOpacity>
-        </View>
-
-        {/* profile card */}
-        <View style={styles.cardWrapper}>
-        <View style={styles.profileCard}>
-            <Image
-            source={require('../../assets/pfp/js_pfp.jpg')}
-            style={styles.avatar}
-            />
-
-            <Text style={styles.name}>{displayName}</Text>
-
-            <View style={styles.statsRow}>
-            <View style={styles.statItem}>
-                <Text style={styles.statLabel}>Eco Points</Text>
-                <Text style={styles.statValue}>{user.ecoPoints ?? "—"}</Text>
+                <TouchableOpacity onPress={() => setShowSettings(true)}>
+                    <Ionicons name="settings-outline" size={26} color="#F5F0E6" />
+                </TouchableOpacity>
             </View>
 
-            <View style={styles.divider} />
+            {/* profile card */}
+            <View style={styles.cardWrapper}>
+                <View style={styles.profileCard}>
+                    <Image
+                        source={require('../../assets/pfp/green_profile_image.jpg')}
+                        style={styles.avatar}
+                    />
 
-            <TouchableOpacity
-                style={styles.statItem}
-                onPress={() => router.push({ pathname: '/badges', params: { userId: user.userId } })}
-            >
-                <View style={styles.badgeLabelRow}>
-                    <Text style={styles.statLabel}>Eco Badges</Text>
-                    <Ionicons name="chevron-forward-outline" size={13} color="#F5F0E6" />
+                    <Text style={styles.name}>{displayName}</Text>
+
+                    <View style={styles.statsRow}>
+                        <View style={styles.statItem}>
+                            <Text style={styles.statLabel}>Eco Points</Text>
+                            <Text style={styles.statValue}>{user.ecoPoints ?? "—"}</Text>
+                        </View>
+
+                        <View style={styles.divider} />
+
+                        <TouchableOpacity
+                            style={styles.statItem}
+                            onPress={() => router.push({ pathname: '/badges', params: { userId: user.userId } })}
+                        >
+                            <View style={styles.badgeLabelRow}>
+                                <Text style={styles.statLabel}>Eco Badges</Text>
+                                <Ionicons name="chevron-forward-outline" size={13} color="#F5F0E6" />
+                            </View>
+                            <Text style={styles.statValue}>{badgeEarned}/{badgeTotal}</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <Text style={styles.statValue}>{badgeEarned}/{badgeTotal}</Text>
-            </TouchableOpacity>
             </View>
-        </View>
-        </View>
 
-        {/* options */}
-        <View style={styles.optionsContainer}>
-        {/* acct info */}
-        <TouchableOpacity
-            style={styles.optionCard}
-            onPress={() => setShowAccountInfo(true)}
-        >
-            <View style={styles.optionLeft}>
-            <Ionicons name="lock-closed-outline" size={20} color="#F5F0E6" />
-            <Text style={styles.optionText}>Account Information</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color="#F5F0E6" />
-        </TouchableOpacity>
+            {/* options */}
+            <View style={styles.optionsContainer}>
+                {/* acct info */}
+                <TouchableOpacity
+                    style={styles.optionCard}
+                    onPress={() => setShowAccountInfo(true)}
+                >
+                    <View style={styles.optionLeft}>
+                        <Ionicons name="lock-closed-outline" size={20} color="#F5F0E6" />
+                        <Text style={styles.optionText}>Account Information</Text>
+                    </View>
+                    <Ionicons name="chevron-forward" size={20} color="#F5F0E6" />
+                </TouchableOpacity>
 
-        {/* history */}
-        <TouchableOpacity
-            style={styles.optionCard}
-            onPress={() => setShowHistory(true)}
-        >
-            <View style={styles.optionLeft}>
-            <Ionicons name="receipt-outline" size={20} color="#F5F0E6" />
-            <Text style={styles.optionText}>History</Text>
+                {/* history */}
+                <TouchableOpacity
+                    style={styles.optionCard}
+                    onPress={() => setShowHistory(true)}
+                >
+                    <View style={styles.optionLeft}>
+                        <Ionicons name="receipt-outline" size={20} color="#F5F0E6" />
+                        <Text style={styles.optionText}>History</Text>
+                    </View>
+                    <Ionicons name="chevron-forward" size={20} color="#F5F0E6" />
+                </TouchableOpacity>
             </View>
-            <Ionicons name="chevron-forward" size={20} color="#F5F0E6" />
-        </TouchableOpacity>
-        </View>
-    </ScrollView>
+        </ScrollView>
     );
 }
 
@@ -738,7 +738,7 @@ const styles = StyleSheet.create({
     /* overlap wrapper */
     cardWrapper: {
         alignItems: "center",
-        marginTop: -70, 
+        marginTop: -70,
     },
 
     /* profile card */
@@ -746,7 +746,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#5ca377",
         width: "85%",
         borderRadius: 20,
-        paddingTop: 60, 
+        paddingTop: 60,
         paddingBottom: 20,
         alignItems: "center",
     },
@@ -757,7 +757,7 @@ const styles = StyleSheet.create({
         height: 90,
         borderRadius: 45,
         position: "absolute",
-        top: -45, 
+        top: -45,
     },
 
     name: {
